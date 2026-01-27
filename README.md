@@ -44,7 +44,7 @@ Los servicios se comunican a través de una **red interna de Docker**, evitando 
 ---
 
 ## 📂 Estructura del proyecto
-
+```
 secure-todo-app/
 ├── app/
 │ ├── app.py # Punto de entrada de Flask
@@ -63,7 +63,7 @@ secure-todo-app/
 ├── docker-compose.yml # Orquestación de contenedores
 ├── .env # Variables de entorno (no versionado)
 └── README.md
-
+```
 
 ---
 
