@@ -43,6 +43,71 @@ Los servicios se comunican a través de una **red interna de Docker**, evitando 
 
 ---
 
+---
+
+## 🐳 Arquitectura Docker
+
+La aplicación está compuesta por **dos contenedores independientes**:
+
+- **web** → Aplicación Flask
+- **db** → Base de datos MySQL
+
+Ambos servicios se comunican mediante una **red interna de Docker Compose**, sin exponer la base de datos al exterior.
+
+---
+
+## 🔐 Funcionalidades implementadas hasta ahora
+
+### ✅ Autenticación segura
+- Registro de usuarios
+- Login con gestión de sesión
+- Logout
+- Contraseñas almacenadas mediante **hash seguro**
+- Protección de rutas mediante `@login_required`
+
+### ✅ Gestión de usuarios
+- Cada usuario tiene una identidad persistente
+- Base preparada para roles (`is_admin`)
+- Carga de usuario mediante `Flask-Login`
+
+### ✅ Infraestructura
+- Inicialización automática de la base de datos
+- Creación de tablas al arrancar la aplicación
+- Espera activa de la base de datos para evitar errores de arranque
+- Variables sensibles gestionadas mediante `.env`
+
+---
+
+## 🔒 Seguridad aplicada
+
+- ❌ No se almacenan contraseñas en texto plano
+- ✅ Hash de contraseñas con `werkzeug.security`
+- ✅ Uso de `SECRET_KEY`
+- ✅ Separación de responsabilidades (auth, models, app)
+- ✅ Sesiones gestionadas por Flask-Login
+- ✅ Servicios aislados en contenedores
+
+---
+
+## ▶️ Cómo ejecutar el proyecto
+
+1. Clonar el repositorio
+2. Crear archivo `.env` con las variables necesarias
+3. Ejecutar:
+
+```bash
+docker compose up --build
+```
+
+4. Acceder desde el navegador a:
+
+* http://localhost:5000/register
+
+* http://localhost:5000/login
+
+* http://localhost:5000/dashboard
+---
+
 ## 📂 Estructura del proyecto
 ```
 secure-todo-app/
@@ -90,21 +155,29 @@ Se incluyen pruebas unitarias con **pytest**, enfocadas principalmente en:
 
 ---
 
-## 🚧 Estado del proyecto
+## 🧪 Estado actual del proyecto
 
-🟡 **En desarrollo**
+### 🟢 FASE COMPLETADA
+- Infraestructura Docker
+- Conexión Flask ↔ MySQL
+- Autenticación segura
+- Gestión de sesiones
 
-Actualmente el proyecto se encuentra en una fase inicial con:
-- Estructura definida
-- Preparación del entorno
-- Base para el desarrollo seguro
+### 🟡 EN DESARROLLO
+- CRUD de tareas
+- Dashboard con datos reales
+- Control de permisos (admin / usuario)
+- Pruebas unitarias
 
-Las siguientes fases incluirán:
-- Implementación de la lógica de negocio
-- Autenticación completa
-- Persistencia de datos
-- Pruebas de seguridad
-- Despliegue completo con Docker
+---
+
+## 📌 Próximos pasos
+- Implementación del modelo `Task`
+- Asociación de tareas por usuario
+- Dashboard con tareas pendientes
+- Usuario administrador con control global
+- Pruebas unitarias de autenticación y permisos
+
 
 ---
 
