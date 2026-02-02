@@ -2,6 +2,8 @@ from sqlalchemy.exc import OperationalError
 from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.orm import declarative_base, sessionmaker
 from flask_login import UserMixin
+from sqlalchemy import ForeignKey, Text
+from sqlalchemy.orm import relationship
 import os
 import time
 
@@ -41,3 +43,15 @@ class User(UserMixin, Base):
     username = Column(String(150), unique=True, nullable=False)
     password_hash = Column(String(255), nullable=False)
     is_admin = Column(Boolean, default=False)
+    
+class Task(Base):
+    __tablename__ = "tasks"
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String(255), nullable=False)
+    description = Column(Text)
+    completed = Column(Boolean, default=False)
+
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+
+    user = relationship("User", backref="tasks")

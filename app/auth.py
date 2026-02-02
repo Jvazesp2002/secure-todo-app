@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user
+from sqlalchemy.exc import IntegrityError
 from models import SessionLocal, User
 
 auth_bp = Blueprint("auth", __name__)

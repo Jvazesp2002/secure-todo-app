@@ -1,6 +1,8 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from models import Base, engine, wait_for_db, SessionLocal, User
 from flask_login import LoginManager, login_required, current_user
+from auth import auth_bp
+from tasks import tasks_bp
 import os
 
 def create_app():
@@ -24,8 +26,8 @@ def create_app():
         return db.query(User).get(int(user_id))
 
     # Blueprints
-    from auth import auth_bp
     app.register_blueprint(auth_bp)
+    app.register_blueprint(tasks_bp)
 
     # Rutas
     @app.route('/')
@@ -35,7 +37,7 @@ def create_app():
     @app.route('/dashboard')
     @login_required
     def dashboard():
-        return f"Dashboard de {current_user.username}"
+        return redirect(url_for("tasks.list_tasks"))
 
     return app
 

@@ -1,0 +1,13 @@
+<h2>Mis tareas</h2>
+
+<form method="post" action="/tasks/create">
+  <input name="title" placeholder="Título" required>
+  <input name="description" placeholder="Descripción">
+  <button type="submit">Crear</button>
+</form>
+
+<ul>
+  {% for task in tasks %}
+    <li>{{ task.title }}</li>
+  {% endfor %}
+</ul>
