@@ -5,29 +5,26 @@
     <title>Registro</title>
 </head>
 <body>
+    <h2>Registro</h2>
 
-<h2>Registro de usuario</h2>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    {% if category == "error" or category == "success" %}
+      <p style="color: {% if category == 'error' %}red{% else %}green{% endif %};">
+        {{ message }}
+      </p>
+    {% endif %}
+  {% endfor %}
+{% endwith %}
 
-<form method="post">
-    <label>
-        Usuario:
-        <input type="text" name="username" required>
-    </label>
-    <br><br>
+    <form method="POST">
+        <input type="text" name="username" placeholder="Usuario" required>
+        <br>
+        <input type="password" name="password" placeholder="Contraseña" required>
+        <br><br>
+        <button type="submit">Registrarse</button>
+    </form>
 
-    <label>
-        Contraseña:
-        <input type="password" name="password" required>
-    </label>
-    <br><br>
-
-    <button type="submit">Registrarse</button>
-</form>
-
-<p>
-    ¿Ya tienes cuenta?
-    <a href="{{ url_for('auth.login') }}">Inicia sesión</a>
-</p>
-
+    <p>¿Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Login</a></p>
 </body>
 </html>

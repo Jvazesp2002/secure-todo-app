@@ -15,7 +15,7 @@ def register():
         db = SessionLocal()
 
         if db.query(User).filter_by(username=username).first():
-            flash("El usuario ya existe")
+            flash("El usuario ya existe", "error")
             return redirect(url_for("auth.register"))
 
         user = User(
@@ -26,7 +26,7 @@ def register():
         db.add(user)
         db.commit()
 
-        flash("Usuario creado correctamente")
+        flash("Usuario creado correctamente", "success")
         return redirect(url_for("auth.login"))
 
     return render_template("register.html")
@@ -44,7 +44,7 @@ def login():
             login_user(user)
             return redirect(url_for("dashboard"))
 
-        flash("Credenciales incorrectas")
+        flash("Credenciales incorrectas", "error")
         return redirect(url_for("auth.login"))
 
     return render_template("login.html")
