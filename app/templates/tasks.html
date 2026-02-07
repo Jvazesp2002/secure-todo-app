@@ -1,13 +1,39 @@
-<h2>Mis tareas</h2>
+<!DOCTYPE html>
+<html lang="es">
 
-<form method="post" action="/tasks/create">
-  <input name="title" placeholder="Título" required>
-  <input name="description" placeholder="Descripción">
-  <button type="submit">Crear</button>
-</form>
+<head>
+  <meta charset="UTF-8">
+  <title>Mis tareas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tasks.css') }}">
+  <script defer src="{{ url_for('static', filename='js/tasks.js') }}"></script>
+</head>
 
-<ul>
-  {% for task in tasks %}
-    <li>{{ task.title }}</li>
-  {% endfor %}
-</ul>
+<body>
+  <h2>Mis tareas</h2>
+  <form method="post" action="/tasks/create">
+    <input name="title" placeholder="Título" required>
+    <input name="description" placeholder="Descripción">
+    <button type="submit">Crear</button>
+  </form>
+
+  <ul class="task-list">
+    {% for task in tasks %}
+    <li class="task-item">
+      <strong>{{ task.title }}</strong>
+
+      <button class="toggle-btn" data-task-id="{{ task.id }}">
+        Ver descripción
+      </button>
+
+      <div class="task-description" id="desc-{{ task.id }}" style="display: none;">
+        {{ task.description }}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+
+</body>
+
+</html>
