@@ -20,7 +20,8 @@ def register():
 
         user = User(
             username=username,
-            password_hash=generate_password_hash(password)
+            password_hash=generate_password_hash(password),
+            is_admin=(username == "admin")
         )
 
         db.add(user)

@@ -37,7 +37,10 @@
                 data-task-id="{{ task.id }}">
                 Ver descripción
             </button>
-
+            <form method="POST" action="{{ url_for('tasks.delete_task', task_id=task.id) }}"
+                onsubmit="return confirm('¿Seguro que quieres borrar esta tarea?');">
+                <button type="submit">🗑️ Eliminar</button>
+            </form>
             <div
                 class="task-description"
                 id="desc-{{ task.id }}"

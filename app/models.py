@@ -18,7 +18,6 @@ DB_USER = os.environ.get("MYSQL_USER")
 DB_PASSWORD = os.environ.get("MYSQL_PASSWORD")
 DB_HOST = os.environ.get("MYSQL_HOST")
 DB_NAME = os.environ.get("MYSQL_DATABASE")
-
 DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
 
 engine = create_engine(DATABASE_URL, echo=False)
@@ -47,6 +46,7 @@ class User(UserMixin, Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
+    is_admin = Column(Boolean, default=False)
     username = Column(String(150), unique=True, nullable=False)
     password_hash = Column(String(255), nullable=False)
     is_admin = Column(Boolean, default=False)
