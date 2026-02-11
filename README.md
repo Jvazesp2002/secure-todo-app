@@ -26,66 +26,44 @@ Cada usuario solo puede acceder y gestionar **sus propias tareas**, mientras que
 
 ---
 
-## 🏗️ Arquitectura
+## 🏗️ Arquitectura y Tecnologías
 
-La aplicación está compuesta por los siguientes servicios:
+La aplicación utiliza un stack moderno y seguro:
 
-- **Flask (Python)**  
-  Backend web y renderizado de vistas.
-
-- **MySQL**  
-  Base de datos relacional para usuarios y tareas.
-
-- **Docker & Docker Compose**  
-  Aislamiento de servicios y despliegue reproducible.
-
-Los servicios se comunican a través de una **red interna de Docker**, evitando la exposición innecesaria de la base de datos.
+* **Frontend:** HTML5, Jinja2 y **Tailwind CSS**.
+* **Backend:** **Flask (Python)** utilizando Blueprints para una arquitectura modular.
+* **Base de Datos:** **MySQL 8.0** con persistencia de datos.
+* **ORM:** SQLAlchemy (previene ataques de SQL Injection).
+* **Orquestación:** **Docker & Docker Compose** para aislamiento de servicios.
 
 ---
 
----
+## 🔐 Funcionalidades Implementadas
 
-## 🐳 Arquitectura Docker
+### ✅ Autenticación y Autorización
+* Registro de usuarios con validación de integridad.
+* Login con gestión de sesión segura mediante `Flask-Login`.
+* **Protección contra IDOR:** Un usuario normal no puede visualizar ni eliminar tareas de terceros mediante manipulación de IDs.
+* **Vista de Admin:** Etiquetado dinámico de tareas según el propietario original.
 
-La aplicación está compuesta por **dos contenedores independientes**:
+### ✅ Interfaz de Usuario (UI)
+* **Dashboard Dinámico:** Lista de tareas con descripciones colapsables mediante JavaScript nativo.
+* **Diseño Adaptativo:** Totalmente compatible con dispositivos móviles (Responsive Design).
+* **Sistema de Alertas:** Feedback visual mediante mensajes flash para errores y confirmaciones.
 
-- **web** → Aplicación Flask
-- **db** → Base de datos MySQL
-
-Ambos servicios se comunican mediante una **red interna de Docker Compose**, sin exponer la base de datos al exterior.
-
----
-
-## 🔐 Funcionalidades implementadas hasta ahora
-
-### ✅ Autenticación segura
-- Registro de usuarios
-- Login con gestión de sesión
-- Logout
-- Contraseñas almacenadas mediante **hash seguro**
-- Protección de rutas mediante `@login_required`
-
-### ✅ Gestión de usuarios
-- Cada usuario tiene una identidad persistente
-- Base preparada para roles (`is_admin`)
-- Carga de usuario mediante `Flask-Login`
-
-### ✅ Infraestructura
-- Inicialización automática de la base de datos
-- Creación de tablas al arrancar la aplicación
-- Espera activa de la base de datos para evitar errores de arranque
-- Variables sensibles gestionadas mediante `.env`
+### ✅ Infraestructura DevSecOps
+* **Dockerfile Optimizado:** Basado en Python Slim para reducir la superficie de ataque.
+* **Wait-for-DB:** Lógica de espera activa para asegurar la disponibilidad de MySQL antes del arranque del servidor web.
+* **Aislamiento de Red:** La base de datos opera en una red interna privada, inaccesible desde el exterior del stack de Docker.
 
 ---
 
-## 🔒 Seguridad aplicada
+## 🔒 Capas de Seguridad Aplicadas
 
-- ❌ No se almacenan contraseñas en texto plano
-- ✅ Hash de contraseñas con `werkzeug.security`
-- ✅ Uso de `SECRET_KEY`
-- ✅ Separación de responsabilidades (auth, models, app)
-- ✅ Sesiones gestionadas por Flask-Login
-- ✅ Servicios aislados en contenedores
+* **Protección de Credenciales:** Hashing de contraseñas mediante `PBKDF2` con salt (vía `werkzeug.security`).
+* **Seguridad en Sesiones:** Firma de cookies mediante `SECRET_KEY` gestionada por entorno.
+* **Principio de Menor Privilegio:** Roles diferenciados para limitar el radio de acción de los usuarios en caso de compromiso.
+* **Validación de Entradas:** Filtrado de datos en servidor antes de procesar cambios en la DB.
 
 ---
 
@@ -93,6 +71,21 @@ Ambos servicios se comunican mediante una **red interna de Docker Compose**, sin
 
 1. Clonar el repositorio
 2. Crear archivo `.env` con las variables necesarias
+
+```text
+# Configuración de Flask
+FLASK_SECRET_KEY=super-secret-key-change-me
+
+
+# Configuración de Base de Datos (MySQL)
+MYSQL_DATABASE=secure_todo
+MYSQL_USER=secure_user
+MYSQL_PASSWORD=secure_password
+MYSQL_ROOT_PASSWORD=root_password
+MYSQL_HOST=db
+
+```
+
 3. Ejecutar:
 
 ```bash
@@ -101,11 +94,7 @@ docker compose up --build
 
 4. Acceder desde el navegador a:
 
-* http://localhost:5000/register
-
-* http://localhost:5000/login
-
-* http://localhost:5000/dashboard
+* http://localhost:5000
 ---
 
 ## 📂 Estructura del proyecto
@@ -160,30 +149,10 @@ Se incluyen pruebas unitarias con **pytest**, enfocadas principalmente en:
 ### 🟢 FASE COMPLETADA
 - Infraestructura Docker
 - Conexión Flask ↔ MySQL
-- Autenticación segura
+- Autenticación segura y persistente
 - Gestión de sesiones
-
-### 🟡 EN DESARROLLO
-- CRUD de tareas
-- Dashboard con datos reales
-- Control de permisos (admin / usuario)
-- Pruebas unitarias
-
----
-
-## 📌 Próximos pasos
-- Implementación del modelo `Task`
-- Asociación de tareas por usuario
-- Dashboard con tareas pendientes
-- Usuario administrador con control global
-- Pruebas unitarias de autenticación y permisos
-
-
----
-
-## 📌 Nota académica
-
-Este proyecto ha sido desarrollado con fines **formativos**, como parte de un máster en ciberseguridad, aplicando criterios de **puesta en producción segura**.
+- CRUD de tareas con lógica de permisos(RBAC)
+- Estilos con TailwindCSS
 
 ---
 
