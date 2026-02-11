@@ -37,6 +37,7 @@
             {% endwith %}
 
             <form method="POST" class="space-y-5">
+              {{ form.csrf_token }}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Nombre de usuario</label>
                     <input type="text" name="username" placeholder="Ej. juan_perez" required

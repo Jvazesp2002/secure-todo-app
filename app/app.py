@@ -1,4 +1,5 @@
 from flask import Flask, redirect, render_template, url_for
+from flask_wtf import CSRFProtect
 from models import Base, engine, wait_for_db, SessionLocal, User
 from flask_login import LoginManager, login_required, current_user
 from auth import auth_bp
@@ -10,6 +11,9 @@ def create_app():
 
     # Configuración básica
     app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'dev_key')
+
+    # Protección CSRF
+    csrf = CSRFProtect(app)
 
     # Esperar a la BD y crear tablas
     wait_for_db(engine)
