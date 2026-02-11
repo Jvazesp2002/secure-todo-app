@@ -48,7 +48,6 @@ def delete_task(task_id):
         flash("La tarea no existe")
         return redirect(url_for("tasks.list_tasks"))
 
-    # Solo el propietario de la tarea o un administrador pueden eliminarla
     if task.user_id != current_user.id and not current_user.is_admin:
         flash("No tienes permiso para borrar esta tarea")
         return redirect(url_for("tasks.list_tasks"))

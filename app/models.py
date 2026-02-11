@@ -46,7 +46,6 @@ class User(UserMixin, Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
-    is_admin = Column(Boolean, default=False)
     username = Column(String(150), unique=True, nullable=False)
     password_hash = Column(String(255), nullable=False)
     is_admin = Column(Boolean, default=False)

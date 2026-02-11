@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure ToDo | Gestión de Tareas Segura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-white text-slate-900">
+
+    <header class="relative overflow-hidden bg-slate-50 border-b border-gray-100">
+        <nav class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center relative z-10">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl">🛡️</span>
+                <span class="text-xl font-bold text-indigo-600">Secure ToDo</span>
+            </div>
+            <div class="space-x-4">
+                <a href="{{ url_for('auth.login') }}" class="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition">Iniciar Sesión</a>
+                <a href="{{ url_for('auth.register') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition">
+                    Empezar ahora
+                </a>
+            </div>
+        </nav>
+
+        <div class="max-w-7xl mx-auto px-6 py-24 md:py-32 relative z-10 text-center">
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-6">
+                Tus tareas, <span class="text-indigo-600">blindadas</span> contra amenazas.
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg text-slate-600 mb-10">
+                Una aplicación de gestión de tareas diseñada bajo el paradigma de <strong>Security by Design</strong>. 
+                Protege tu productividad con estándares de cifrado y control de acceso robustos.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
+                <a href="{{ url_for('auth.register') }}" class="px-8 py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all transform hover:-translate-y-1">
+                    Crear mi cuenta segura
+                </a>
+                <a href="#features" class="px-8 py-4 bg-white text-slate-700 border border-slate-200 font-bold rounded-xl hover:bg-slate-50 transition-all">
+                    Saber más
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="features" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900">Arquitectura de Seguridad</h2>
+                <p class="text-slate-500 mt-4">Implementaciones técnicas realizadas para este proyecto de Master.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-2xl mb-6">🔑</div>
+                    <h3 class="text-xl font-bold mb-3">Autenticación Segura</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Hashing de contraseñas mediante **BCrypt** con factor de trabajo ajustable para prevenir ataques de diccionario y fuerza bruta.
+                    </p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-2xl mb-6">🚫</div>
+                    <h3 class="text-xl font-bold mb-3">Control de Acceso (RBAC)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Sistema basado en roles que separa los privilegios de usuario y administrador, asegurando el principio de menor privilegio.
+                    </p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-2xl mb-6">🛡️</div>
+                    <h3 class="text-xl font-bold mb-3">Protección OWASP</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Mitigación activa contra CSRF, SQL Injection y XSS mediante validación estricta de formularios y escape de datos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-slate-400 text-sm mb-4">Proyecto Final de Máster en Ciberseguridad de la asignatura de Puesta en Producción Segura</p>
+            <div class="flex justify-center space-x-6 text-slate-500 text-xs">
+                <span>© 2024 Secure ToDo</span>
+                <span>Desarrollado con Flask & SQLAlchemy</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

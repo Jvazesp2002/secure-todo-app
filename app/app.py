@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, render_template, url_for
 from models import Base, engine, wait_for_db, SessionLocal, User
 from flask_login import LoginManager, login_required, current_user
 from auth import auth_bp
@@ -32,7 +32,7 @@ def create_app():
     # Rutas
     @app.route('/')
     def index():
-        return "Flask está corriendo correctamente."
+        return render_template('index.html')
 
     @app.route('/dashboard')
     @login_required
