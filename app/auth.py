@@ -10,43 +10,49 @@ auth_bp = Blueprint("auth", __name__)
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register():
     form = RegistrationForm()
-
     if form.validate_on_submit():
+        # 🛡️ IMPORTANTE: Usar .data
         username = form.username.data
         password = form.password.data
 
         db = SessionLocal()
         if db.query(User).filter_by(username=username).first():
-            flash("El nombre de usuario ya existe", "error")
-            return redirect(url_for("auth.register"))
-        
+            flash("El usuario ya existe", "error")
+            return render_template("register.html", form=form)
+
         user = User(
             username=username,
-            password_hash=generate_password_hash(password),
+            password_hash=generate_password_hash(password), # Aquí se cifra
             is_admin=(username == "admin")
         )
         db.add(user)
         db.commit()
-        flash("Registro exitoso. Ahora puedes iniciar sesión.", "success")
-        return redirect(url_for("auth.login"))
+        db.close() # Siempre cierra la sesión de DB
+
+        flash("Usuario creado correctamente", "success")
+        return redirect(url_for("auth.login")) # <--- Redirección corregida
+
     return render_template("register.html", form=form)
 
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        # 🛡️ IMPORTANTE: Usar .data
         username = form.username.data
         password = form.password.data
-        
+
         db = SessionLocal()
         user = db.query(User).filter_by(username=username).first()
-        
+        db.close()
+
+        # Comparamos la contraseña en plano contra el hash de la DB
         if user and check_password_hash(user.password_hash, password):
             login_user(user)
             return redirect(url_for("dashboard"))
-        
-        flash("Credenciales erroneas", "error")
-        
+
+        flash("Credenciales incorrectas", "error")
+    
     return render_template("login.html", form=form)
 
 @auth_bp.route("/logout")
