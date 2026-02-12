@@ -14,13 +14,12 @@ El objetivo es construir una aplicación funcional, dockerizada y securizada, ap
 
 La aplicación consiste en un **gestor de tareas (ToDo)** con las siguientes características:
 
-- Registro y login de usuarios
-- Autenticación segura
-- Dashboard individual por usuario
-- Gestión de tareas personales
-- Usuario administrador con permisos globales
-- Persistencia en base de datos MySQL
-- Arquitectura basada en contenedores Docker
+- Registro y login de usuarios con políticas de cookies seguras.
+- Autenticación robusta y gestión de sesiones cifradas.
+- Dashboard individual con aislamiento de datos por usuario.
+- Usuario administrador con privilegios elevados (RBAC).
+- **Tráfico íntegramente cifrado mediante TLS/SSL**.
+- Arquitectura de microservicios protegida por un **Proxy Inverso**.
 
 Cada usuario solo puede acceder y gestionar **sus propias tareas**, mientras que el usuario administrador puede gestionar las tareas de todos los usuarios.
 
@@ -31,31 +30,29 @@ Cada usuario solo puede acceder y gestionar **sus propias tareas**, mientras que
 La aplicación utiliza un stack moderno y seguro:
 
 * **Frontend:** HTML5, Jinja2 y **Tailwind CSS**.
-* **Backend:** **Flask (Python)** utilizando Blueprints para una arquitectura modular.
-* **Base de Datos:** **MySQL 8.0** con persistencia de datos.
-* **ORM:** SQLAlchemy (previene ataques de SQL Injection).
-* **Orquestación:** **Docker & Docker Compose** para aislamiento de servicios.
+* **Backend:** **Flask (Python)** protegido con `ProxyFix` para terminación SSL.
+* **Proxy Inverso:** **Nginx** actuando como escudo perimetral y gestor de certificados.
+* **Base de Datos:** **MySQL 8.0** (aislada de la red pública).
+* **ORM:** SQLAlchemy (parametrización nativa contra SQL Injection).
+* **Orquestación:** **Docker Compose** con redes internas segmentadas.
 
 ---
 
 ## 🔐 Funcionalidades Implementadas
 
-### ✅ Autenticación y Autorización
-* Registro de usuarios con validación de integridad.
-* Login con gestión de sesión segura mediante `Flask-Login`.
-* **Protección contra IDOR:** Un usuario normal no puede visualizar ni eliminar tareas de terceros mediante manipulación de IDs.
-* **Vista de Admin:** Etiquetado dinámico de tareas según el propietario original.
+### ✅ Cifrado de Extremo a Extremo (HTTPS)
+* **Certificados SSL:** Uso de certificados (auto-firmados para desarrollo) que garantizan la privacidad del tráfico.
+* **Redirección Forzosa:** El puerto 80 (HTTP) redirige automáticamente al 443 (HTTPS) mediante código de estado 301.
+* **Protocolos Seguros:** Configuración de Nginx limitada a **TLS 1.2 y 1.3** para evitar ataques de degradación de protocolo.
 
-### ✅ Interfaz de Usuario (UI)
-* **Dashboard Dinámico:** Lista de tareas con descripciones colapsables mediante JavaScript nativo.
-* **Diseño Adaptativo:** Totalmente compatible con dispositivos móviles (Responsive Design).
-* **Sistema de Alertas:** Feedback visual mediante mensajes flash para errores y confirmaciones.
+### ✅ Protección contra Ataques Web
+* **Defensa CSRF:** Protección global mediante tokens contra *Cross-Site Request Forgery* en todos los formularios.
+* **Validación de Referer:** Control estricto de cabeceras en peticiones HTTPS para asegurar el origen legítimo del tráfico.
+* **Hardening de Cookies:** Uso de flags `Secure`, `HttpOnly` y `SameSite=Lax` para mitigar el secuestro de sesiones (Session Hijacking).
 
 ### ✅ Infraestructura DevSecOps
-* **Dockerfile Optimizado:** Basado en Python Slim para reducir la superficie de ataque.
-* **Wait-for-DB:** Lógica de espera activa para asegurar la disponibilidad de MySQL antes del arranque del servidor web.
-* **Aislamiento de Red:** La base de datos opera en una red interna privada, inaccesible desde el exterior del stack de Docker.
-
+* **Aislamiento de Puertos:** El contenedor de Flask ha sido retirado del mapeo público (puerto 5000 cerrado), exponiéndose únicamente de forma interna hacia Nginx.
+* **Proxy Inverso Seguro:** Nginx actúa como única puerta de enlace, ocultando la topología interna y la tecnología del backend.
 ---
 
 ## 🔒 Capas de Seguridad Aplicadas
@@ -94,7 +91,7 @@ docker compose up --build
 
 4. Acceder desde el navegador a:
 
-* http://localhost:5000
+* https://localhost
 ---
 
 ## 📂 Estructura del proyecto
@@ -109,10 +106,10 @@ secure-todo-app/
 │ ├── Dockerfile # Imagen Docker de la app
 │ ├── templates/ # Vistas HTML
 │ └── static/ # Recursos estáticos
-│
-├── tests/
-│ ├── test_auth.py # Pruebas de autenticación
-│ └── test_permissions.py # Pruebas de autorización
+├── nginx/
+│   ├── default.conf    # Configuración de Proxy Inverso y SSL
+│   ├── selfsigned.crt  # Certificado SSL generado
+│   └── selfsigned.key  # Llave privada SSL
 │
 ├── docker-compose.yml # Orquestación de contenedores
 ├── .env # Variables de entorno (no versionado)
@@ -136,7 +133,7 @@ El proyecto está diseñado teniendo en cuenta principios básicos de seguridad:
 
 ## 🧪 Pruebas
 
-Se incluyen pruebas unitarias con **pytest**, enfocadas principalmente en:
+Se incluirán pruebas unitarias con **pytest**, enfocadas principalmente en:
 
 - Login correcto e incorrecto
 - Acceso no autorizado a rutas protegidas
@@ -153,6 +150,7 @@ Se incluyen pruebas unitarias con **pytest**, enfocadas principalmente en:
 - Gestión de sesiones
 - CRUD de tareas con lógica de permisos(RBAC)
 - Estilos con TailwindCSS
+- Cifrado de extremo a extremo (HTTPS)
 
 ---
 
