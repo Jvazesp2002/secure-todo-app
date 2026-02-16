@@ -131,6 +131,23 @@ El proyecto está diseñado teniendo en cuenta principios básicos de seguridad:
 
 ---
 
+## 🛡️ Security Testing & Evidence
+
+Para validar la seguridad de la aplicación, se han realizado las siguientes pruebas:
+
+### 1. Validación de Cabeceras (Hardening)
+Se ha verificado mediante `curl -I https://localhost` que el servidor responde con las cabeceras de seguridad configuradas:
+- `Strict-Transport-Security`: Activo.
+- `Content-Security-Policy`: Restrictiva.
+
+### 2. Prueba de Resiliencia CSRF
+Intentos de realizar peticiones `POST` (como creación de tareas) desde herramientas externas sin el token `csrf_token` resultan en un código de estado `400 Bad Request`.
+
+### 3. Aislamiento de Red
+Se ha comprobado mediante escaneo de puertos que el puerto **5000 (Flask)** y el **3306 (MySQL)** son inaccesibles desde el exterior de la red Docker, reduciendo la superficie de ataque solo al puerto **443 (Nginx)**.
+
+---
+
 ## 🧪 Pruebas
 
 Se incluirán pruebas unitarias con **pytest**, enfocadas principalmente en:
