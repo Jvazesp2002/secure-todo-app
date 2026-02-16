@@ -5,11 +5,26 @@ from flask_wtf import CSRFProtect
 from werkzeug.middleware.proxy_fix import ProxyFix
 from auth import auth_bp
 from tasks import tasks_bp
+from logging.handlers import RotatingFileHandler
 import os
+import logging
 
 def create_app():
     app = Flask(__name__)
 
+    # Configuración Auditoria: Registro de errores y eventos en un archivo que rota al alcanzar 1MB
+    handler = RotatingFileHandler('security_audit.log', maxBytes=1000000, backupCount=3)
+    handler.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s [IP: %(remote_addr)s]')
+    handler.setFormatter(formatter)
+    app.logger.addHandler(handler)    
+    
+    # Inyeccion de IP en los logs para tener trazabilidad de eventos por dirección IP
+    @app.before_request
+    def log_request_info():
+        from flask import request
+        request.remote_addr = request.headers.get('X-Real-IP)', request.remote_addr)
+    
     app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'dev_key')
     
     # Configuración de Cookies Seguras (ahora que tenemos HTTPS)
