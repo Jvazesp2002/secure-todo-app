@@ -1,4 +1,4 @@
-# Descargar y ejecutar Tailwind Standalone ---
+# Descargar y ejecutar Tailwind Standalone
 FROM debian:bookworm-slim AS builder
 WORKDIR /build
 
@@ -10,7 +10,7 @@ RUN curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/downlo
     chmod +x tailwindcss-linux-x64 && \
     mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
 
-# Copiamos tus archivos
+# Copiamos los archivos
 COPY tailwind.config.js .
 COPY templates ./templates
 COPY static/src ./static/src
