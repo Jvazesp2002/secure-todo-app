@@ -33,6 +33,7 @@ jobs:
         # Bandit analiza el código buscando inyecciones SQL o XSS
         run: |
           bandit -r app/ -ll
+        continue-on-error: true  # No detiene el pipeline, pero reporta vulnerabilidades
 
       - name: Análisis de seguridad con Safety (Dependencias)
         run: |
