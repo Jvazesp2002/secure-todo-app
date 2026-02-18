@@ -1,0 +1,56 @@
+name: Secure ToDo CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov bandit safety
+        
+      - name: Análisis de seguridad con Bandit (Código Fuente)
+      # Bandit analiza el código Python buscando vulnerabilidades como inyecciones SQL o XSS
+        run: |
+          bandit -r app/ -ll
+
+      - name: Análisis de seguridad con Safety (Dependencias)
+      # Verifica si alguna librería en requirements.txt tiene vulnerabilidades (CVEs) conocidas
+      run: |
+          safety check
+
+      - name: Ejecutar pruebas unitarias con cobertura
+        run: |
+          pytest --cov=app app/tests/
+
+# Verificacion de Docker
+docker-verification:
+  needs: security-and-tests
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout del código
+      uses: actions/checkout@v4
+    
+    - name: Validar Build de Docker
+    # Asegura que el comando de Tailwind CSS y el Dockerfile funcionan correctamente
+      run: |
+        docker compose build --no-cache
