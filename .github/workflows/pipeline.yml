@@ -32,13 +32,13 @@ jobs:
       - name: Análisis de seguridad con Bandit (Código Fuente)
         # Bandit analiza el código buscando inyecciones SQL o XSS
         run: |
-          bandit -r app/ -ll
+          bandit -r app/ -x app/tests/ -ll
         continue-on-error: true  # No detiene el pipeline, pero reporta vulnerabilidades
 
       - name: Análisis de seguridad con Safety (Dependencias)
         run: |
           # Verifica vulnerabilidades conocidas en requirements.txt
-          safety scan
+          safety check
         continue-on-error: true  # No detiene el pipeline, pero reporta vulnerabilidades
 
       - name: Ejecutar pruebas unitarias con cobertura
