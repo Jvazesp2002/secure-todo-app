@@ -20,7 +20,6 @@ def client(app):
 
 @pytest.fixture
 def db_session():
-    """Fixture para obtener una sesión de base de datos limpia en los tests."""
     session = SessionLocal()
     yield session
     session.close()

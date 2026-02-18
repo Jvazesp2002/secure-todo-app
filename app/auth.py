@@ -27,10 +27,10 @@ def register():
         )
         db.add(user)
         db.commit()
-        db.close() # Siempre cierra la sesión de DB
+        db.close() # Cierra la sesión de DB
 
         flash("Usuario creado correctamente", "success")
-        return redirect(url_for("auth.login")) # <--- Redirección corregida
+        return redirect(url_for("auth.login"))
 
     return render_template("register.html", form=form)
 
@@ -38,7 +38,6 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        # 🛡️ IMPORTANTE: Usar .data
         username = form.username.data
         password = form.password.data
 
