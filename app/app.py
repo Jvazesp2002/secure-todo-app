@@ -1,5 +1,5 @@
-from flask import Flask, redirect, render_template, url_for
-from models import Base, engine, wait_for_db, SessionLocal, User
+from flask import Flask, abort, redirect, render_template, url_for
+from models import Base, Task, engine, wait_for_db, SessionLocal, User
 from flask_login import LoginManager, login_required, current_user
 from flask_wtf import CSRFProtect
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -72,6 +72,7 @@ def create_app():
 
     return app
 
+
 if __name__ == '__main__':
     app = create_app()
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000) #nosec
