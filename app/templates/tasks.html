@@ -8,87 +8,99 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
     <script defer src="{{ url_for('static', filename='js/tasks.js') }}"></script>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-[#d6d3d1] min-h-screen selection:bg-[#d97706]/30">
 
-    <nav class="bg-white shadow-sm border-b border-gray-200 px-6 py-4 flex justify-between items-center">
-        <h1 class="text-xl font-bold text-indigo-600 flex items-center">
-            <span class="mr-2">🛡️</span> Herramienta de Lista de Tareas
+    <nav class="bg-[#1c1917] shadow-xl border-b-2 border-[#b45309] px-6 py-4 flex justify-between items-center">
+        <h1 class="text-xl font-black text-[#f5f5f4] flex items-center tracking-tighter">
+            <span class="mr-2 filter drop-shadow">🛡️</span> SECURE<span class="text-[#f59e0b]">TODO</span>
         </h1>
         <div class="flex items-center space-x-4">
-            <span class="text-gray-600 text-sm">Bienvenido, <strong>{{ current_user.username }}</strong></span>
-            <a href="{{ url_for('auth.logout') }}" class="text-sm font-medium text-red-600 hover:text-red-500 transition">Cerrar sesión</a>
+            <span class="text-[#a8a29e] text-xs font-bold uppercase tracking-widest">Usuario: <strong class="text-[#fbbf24] ml-1">{{ current_user.username }}</strong></span>
+            <a href="{{ url_for('auth.logout') }}" class="bg-[#44403c] hover:bg-[#991b1b] text-[#f5f5f4] px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 shadow-inner">Salir</a>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto py-10 px-4">
+    <main class="max-w-4xl mx-auto py-12 px-4">
         
-        <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-10">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                <span class="mr-2 text-indigo-500">+</span> Crear Nueva Tarea
+        <section class="bg-[#f5f5f4] rounded-[2rem] shadow-2xl shadow-stone-800/20 border-2 border-[#a8a29e]/30 p-8 mb-12">
+            <h2 class="text-sm font-black text-[#78350f] mb-8 flex items-center uppercase tracking-[0.3em]">
+                <span class="mr-3 w-8 h-8 bg-[#d97706] text-white rounded-full flex items-center justify-center text-xl shadow-md">+</span> 
+                Nuevo Registro
             </h2>
-            <form method="POST" action="{{ url_for('tasks.create_task') }}" class="space-y-4">
+            <form method="POST" action="{{ url_for('tasks.create_task') }}" class="space-y-6">
                 {{ form.csrf_token }}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Título</label>
-                        <input type="text" name="title" required placeholder="¿Qué hay que hacer?"
-                            class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-2">
+                        <label class="block text-[10px] font-black text-[#a8a29e] uppercase tracking-widest ml-2">Título de la tarea</label>
+                        <input type="text" name="title" required placeholder="Nombre descriptivo..."
+                            class="w-full px-6 py-4 rounded-2xl border-2 border-[#e7e5e4] bg-[#fafaf9] focus:bg-white focus:border-[#d97706] outline-none transition text-[#44403c] font-bold shadow-inner">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
-                        <textarea name="description" required placeholder="Detalles de la tarea..." rows="1"
-                            class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"></textarea>
+                    <div class="space-y-2">
+                        <label class="block text-[10px] font-black text-[#a8a29e] uppercase tracking-widest ml-2">Descripción</label>
+                        <textarea name="description" required placeholder="Detalles de la operación..." rows="1"
+                            class="w-full px-6 py-4 rounded-2xl border-2 border-[#e7e5e4] bg-[#fafaf9] focus:bg-white focus:border-[#d97706] outline-none transition text-[#44403c] font-bold shadow-inner"></textarea>
                     </div>
                 </div>
-                <button type="submit" 
-                    class="w-full md:w-auto px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition shadow-md">
-                    Guardar Tarea
-                </button>
+                <div class="flex justify-end">
+                    <button type="submit" 
+                        class="w-full md:w-auto px-10 py-4 bg-[#78350f] hover:bg-[#b45309] text-[#fef3c7] font-black rounded-2xl transition-all shadow-xl shadow-stone-900/20 active:scale-95 tracking-widest text-xs">
+                        CONFIRMAR REGISTRO
+                    </button>
+                </div>
             </form>
         </section>
 
         <section>
-            <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
-                <span class="mr-2">📋</span> Lista de Tareas
-            </h2>
+            <div class="flex items-center mb-8 px-2">
+                <h2 class="text-xs font-black text-[#78350f] uppercase tracking-[0.4em]">Tareas Pendientes</h2>
+                <div class="flex-1 h-px bg-[#a8a29e]/40 mx-6"></div>
+                <span class="text-[10px] font-black text-white bg-[#b45309] px-3 py-1 rounded-full">{{ tasks|length }}</span>
+            </div>
 
-            <div class="space-y-4">
+            <div class="space-y-6">
                 {% for task in tasks %}
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:border-indigo-300 transition duration-200">
-                    <div class="p-5 flex justify-between items-center bg-white">
+                <div class="bg-[#fafaf9] rounded-3xl shadow-xl border-b-4 border-r-4 border-[#a8a29e]/20 overflow-hidden hover:border-[#d97706]/40 transition-all duration-300 group">
+                    <div class="p-6 flex justify-between items-center">
                             <div class="flex-1">
-                                <h3 class="text-lg font-semibold text-gray-800">{{ task.title }}</h3>
-                                <p class="text-xs text-gray-400 mt-1">Creada el: {{ task.created_at.strftime('%d/%m/%Y') }}</p>
+                                <h3 class="text-xl font-extrabold text-[#292524] group-hover:text-[#b45309] transition-colors tracking-tighter">{{ task.title }}</h3>
+                                <div class="flex items-center space-x-4 mt-3">
                                 {% if task.user_id != current_user.id %}
-                                <p class="text-xs text-indigo-500 font-medium mt-1">
-                                <span class="text-gray-400 font-normal">Creado por:</span> {{ task.user.username }}
+                                <p class="text-xs text-gray-600 font-medium mt-1">
+                                <span class="text-[10px] text-[#d97706] font-black uppercase tracking-widest">Creado por:</span> {{ task.user.username }}
                                 </p>
                                 {% endif %}
+                                    <p class="text-[10px] text-[#d97706] font-black uppercase tracking-widest">
+                                        {{ task.created_at.strftime('%d . %m . %Y') }}
+                                    </p>
+                                </div>
                             </div>
                         
-                        <div class="flex items-center space-x-3">
-                            <button class="toggle-btn text-sm font-medium text-indigo-600 hover:text-indigo-800 bg-indigo-50 px-3 py-1.5 rounded-md transition"
+                        <div class="flex items-center space-x-4">
+                            <button class="toggle-btn text-[10px] font-black text-[#fef3c7] bg-[#78350f] hover:bg-[#b45309] px-5 py-3 rounded-2xl transition-all uppercase tracking-widest shadow-lg"
                                 data-task-id="{{ task.id }}">
-                                Ver descripción
+                                Ver Descripción
                             </button>
                             
                             <form method="POST" action="{{ url_for('tasks.delete_task', task_id=task.id) }}"
                                 onsubmit="return confirm('¿Seguro que quieres borrar esta tarea?');">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <button type="submit" class="text-gray-400 hover:text-red-600 transition p-2 rounded-full hover:bg-red-50">
-                                    🗑️
+                                <button type="submit" class="text-[#d6d3d1] hover:text-[#ef4444] transition p-3 rounded-2xl hover:bg-[#fee2e2]">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                 </button>
                             </form>
                         </div>
                     </div>
                     
-                    <div id="desc-{{ task.id }}" class="hidden bg-gray-50 px-5 py-4 border-t border-gray-100 text-gray-600 text-sm italic">
-                        {{ task.description }}
+                    <div id="desc-{{ task.id }}" class="hidden bg-[#fefce8] px-10 py-6 border-t-2 border-[#fef3c7] text-[#92400e] text-sm font-bold leading-relaxed shadow-inner">
+                        <div class="flex items-start">
+                            <span class="text-[#d97706] mr-2">❯</span>
+                            <p>{{ task.description }}</p>
+                        </div>
                     </div>
                 </div>
                 {% else %}
-                <div class="text-center py-12 bg-white rounded-xl border border-dashed border-gray-300">
-                    <p class="text-gray-500">No hay tareas pendientes.</p>
+                <div class="text-center py-20 bg-[#e7e5e4]/50 rounded-[3rem] border-4 border-dashed border-[#a8a29e]/30">
+                    <p class="text-[#a8a29e] font-black uppercase tracking-widest text-xs">Sin registros activos</p>
                 </div>
                 {% endfor %}
             </div>

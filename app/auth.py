@@ -11,7 +11,6 @@ auth_bp = Blueprint("auth", __name__)
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        # 🛡️ IMPORTANTE: Usar .data
         username = form.username.data
         password = form.password.data
 

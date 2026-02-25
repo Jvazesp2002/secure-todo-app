@@ -6,83 +6,92 @@
     <title>Secure ToDo | Gestión de Tareas Segura</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
-    </head>
-<body class="bg-white text-slate-900">
+</head>
+<body class="bg-[#d6d3d1] min-h-screen selection:bg-[#d97706]/30">
 
-    <header class="relative overflow-hidden bg-slate-50 border-b border-gray-100">
-        <nav class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center relative z-10">
+    <header class="relative overflow-hidden bg-[#1c1917] border-b-2 border-[#b45309] shadow-2xl">
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center relative z-10">
             <div class="flex items-center space-x-2">
-                <span class="text-2xl">🛡️</span>
-                <span class="text-xl font-bold text-indigo-600">Secure ToDo</span>
+                <span class="text-2xl filter drop-shadow">🛡️</span>
+                <span class="text-xl font-black text-[#f5f5f4] tracking-tighter uppercase">Secure<span class="text-[#f59e0b]">ToDo</span></span>
             </div>
             <div class="space-x-4">
-                <a href="{{ url_for('auth.login') }}" class="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition">Iniciar Sesión</a>
-                <a href="{{ url_for('auth.register') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition">
+                <a href="{{ url_for('auth.login') }}" class="text-[10px] font-black text-[#a8a29e] hover:text-[#f5f5f4] uppercase tracking-widest transition">Iniciar Sesión</a>
+                <a href="{{ url_for('auth.register') }}" class="inline-flex items-center px-6 py-2 bg-[#44403c] text-[#f5f5f4] text-[10px] font-black uppercase tracking-widest rounded-xl shadow-inner border border-[#57534e] hover:bg-[#991b1b] transition-all">
                     Empezar ahora
                 </a>
             </div>
         </nav>
 
         <div class="max-w-7xl mx-auto px-6 py-24 md:py-32 relative z-10 text-center">
-            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-6">
-                Tus tareas, <span class="text-indigo-600">blindadas</span> contra amenazas.
+            <h1 class="text-5xl md:text-7xl font-black tracking-tighter text-[#f5f5f4] mb-8 leading-none">
+                TUS TAREAS, <span class="text-[#f59e0b]">BLINDADAS</span> <br class="hidden md:block"> CONTRA AMENAZAS.
             </h1>
-            <p class="max-w-2xl mx-auto text-lg text-slate-600 mb-10">
-                Una aplicación de gestión de tareas diseñada bajo el paradigma de <strong>Security by Design</strong>. 
-                Protege tu productividad con estándares de cifrado y control de acceso robustos.
+            <p class="max-w-2xl mx-auto text-lg text-[#a8a29e] mb-12 font-bold uppercase tracking-tight">
+                Arquitectura de gestión diseñada bajo el paradigma de <span class="text-[#f5f5f4]">Security by Design</span>. 
+                Protección de activos críticos y registros.
             </p>
-            <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
-                <a href="{{ url_for('auth.register') }}" class="px-8 py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all transform hover:-translate-y-1">
+            <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+                <a href="{{ url_for('auth.register') }}" class="px-10 py-4 bg-[#78350f] text-[#fef3c7] font-black uppercase tracking-widest text-xs rounded-2xl shadow-xl shadow-black/40 hover:bg-[#b45309] transition-all transform hover:-translate-y-1">
                     Crear mi cuenta segura
                 </a>
-                <a href="#features" class="px-8 py-4 bg-white text-slate-700 border border-slate-200 font-bold rounded-xl hover:bg-slate-50 transition-all">
+                <a href="#features" class="px-10 py-4 bg-[#f5f5f4] text-[#1c1917] font-black uppercase tracking-widest text-xs rounded-2xl shadow-xl hover:bg-white transition-all">
                     Saber más
                 </a>
             </div>
         </div>
+        
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-[#d97706]/10 rounded-full blur-[120px]"></div>
     </header>
 
-    <section id="features" class="py-24 bg-white">
+    <section id="features" class="py-24 bg-[#fafaf9] border-t-2 border-[#b45309]/20">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-slate-900">Arquitectura de Seguridad</h2>
-                <p class="text-slate-500 mt-4">Implementaciones técnicas realizadas para este proyecto de Master.</p>
+            <div class="text-center mb-20">
+                <h2 class="text-xs font-black text-[#78350f] uppercase tracking-[0.4em] mb-4">Protocolos de Auditoría</h2>
+                <h3 class="text-4xl font-black text-[#1c1917] tracking-tighter uppercase">Arquitectura de Seguridad</h3>
+                <div class="w-24 h-1 bg-[#d97706] mx-auto mt-6"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100">
-                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-2xl mb-6">🔑</div>
-                    <h3 class="text-xl font-bold mb-3">Autenticación Segura</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Hashing de contraseñas mediante **BCrypt** con factor de trabajo ajustable para prevenir ataques de diccionario y fuerza bruta.
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="p-10 rounded-[2.5rem] bg-[#f5f5f4] border-b-4 border-r-4 border-[#a8a29e]/30 shadow-2xl shadow-stone-800/10 group hover:border-[#d97706]/40 transition-all">
+                    <div class="w-14 h-14 bg-[#1c1917] rounded-2xl flex items-center justify-center text-2xl mb-8 shadow-lg">🔑</div>
+                    <h3 class="text-xl font-black mb-4 text-[#1c1917] tracking-tighter uppercase">Autenticación Segura</h3>
+                    <p class="text-[#78716c] text-sm font-bold leading-relaxed">
+                        Hashing de contraseñas mediante <span class="text-[#b45309]">BCrypt</span> con factor de trabajo ajustable para prevenir ataques de diccionario.
                     </p>
                 </div>
 
-                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100">
-                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-2xl mb-6">🚫</div>
-                    <h3 class="text-xl font-bold mb-3">Control de Acceso (RBAC)</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Sistema basado en roles que separa los privilegios de usuario y administrador, asegurando el principio de menor privilegio.
+                <div class="p-10 rounded-[2.5rem] bg-[#f5f5f4] border-b-4 border-r-4 border-[#a8a29e]/30 shadow-2xl shadow-stone-800/10 group hover:border-[#d97706]/40 transition-all">
+                    <div class="w-14 h-14 bg-[#1c1917] rounded-2xl flex items-center justify-center text-2xl mb-8 shadow-lg">🚫</div>
+                    <h3 class="text-xl font-black mb-4 text-[#1c1917] tracking-tighter uppercase">Control RBAC</h3>
+                    <p class="text-[#78716c] text-sm font-bold leading-relaxed">
+                        Sistema basado en roles que separa los privilegios, asegurando el cumplimiento del <span class="text-[#b45309]">principio de menor privilegio</span>.
                     </p>
                 </div>
 
-                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100">
-                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-2xl mb-6">🛡️</div>
-                    <h3 class="text-xl font-bold mb-3">Protección OWASP</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Mitigación activa contra CSRF, SQL Injection y XSS mediante validación estricta de formularios y escape de datos.
+                <div class="p-10 rounded-[2.5rem] bg-[#f5f5f4] border-b-4 border-r-4 border-[#a8a29e]/30 shadow-2xl shadow-stone-800/10 group hover:border-[#d97706]/40 transition-all">
+                    <div class="w-14 h-14 bg-[#1c1917] rounded-2xl flex items-center justify-center text-2xl mb-8 shadow-lg">🛡️</div>
+                    <h3 class="text-xl font-black mb-4 text-[#1c1917] tracking-tighter uppercase">Protección OWASP</h3>
+                    <p class="text-[#78716c] text-sm font-bold leading-relaxed">
+                        Mitigación activa contra <span class="text-[#b45309]">CSRF, SQL Injection y XSS</span> mediante validación estricta y escape de datos.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-slate-900 text-white py-12">
+    <footer class="bg-[#1c1917] text-[#f5f5f4] py-16 border-t-4 border-[#b45309]">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="text-slate-400 text-sm mb-4">Proyecto Final de Máster en Ciberseguridad de la asignatura de Puesta en Producción Segura</p>
-            <div class="flex justify-center space-x-6 text-slate-500 text-xs">
-                <span>© 2024 Secure ToDo</span>
-                <span>Desarrollado con Flask & SQLAlchemy</span>
+            <div class="mb-8">
+                <span class="text-3xl font-black tracking-tighter uppercase italic">Secure<span class="text-[#f59e0b]">ToDo</span></span>
+            </div>
+            <p class="text-[#a8a29e] text-[10px] font-black uppercase tracking-[0.3em] mb-6 max-w-xl mx-auto leading-loose">
+                Proyecto Final de Máster en Ciberseguridad <br> 
+                <span class="text-[#57534e]">Asignatura de Puesta en Producción Segura</span>
+            </p>
+            <div class="flex justify-center space-x-8 text-[#57534e] text-[10px] font-black uppercase tracking-widest border-t border-[#44403c] pt-8">
+                <span>© 2026 Secure ToDo</span>
+                <span class="text-[#d97706]">Stack: Flask & SQLAlchemy</span>
             </div>
         </div>
     </footer>
