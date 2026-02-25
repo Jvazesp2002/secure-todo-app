@@ -97,23 +97,40 @@ docker compose up --build
 ## 📂 Estructura del proyecto
 ```
 secure-todo-app/
+├── .github/workflows/
+│   └── pipeline.yml          # Pipeline CI/CD (Testing & Linting automatizado)
 ├── app/
-│ ├── app.py # Punto de entrada de Flask
-│ ├── models.py # Modelos de base de datos
-│ ├── auth.py # Autenticación y registro
-│ ├── tasks.py # Gestión de tareas
-│ ├── requirements.txt # Dependencias Python
-│ ├── Dockerfile # Imagen Docker de la app
-│ ├── templates/ # Vistas HTML
-│ └── static/ # Recursos estáticos
+│   ├── static/               # Activos estáticos
+│   │   ├── css/              # Estilos procesados (output.css)
+│   │   ├── fonts/            # Tipografías locales (Inter, etc.)
+│   │   ├── js/               # Lógica de cliente (tasks.js)
+│   │   └── src/              # Archivos fuente de Tailwind (input.css)
+│   ├── templates/            # Vistas HTML (Diseño Industrial/Earth Tone)
+│   │   ├── index.html
+│   │   ├── login.html
+│   │   ├── register.html
+│   │   └── tasks.html
+│   ├── tests/                # Suite de pruebas de seguridad
+│   │   ├── conftest.py       # Configuración de fixtures de Pytest
+│   │   ├── test_auth.py      # Pruebas de vectores de autenticación
+│   │   ├── test_rate_limit.py# Verificación de protección contra fuerza bruta
+│   │   └── test_security.py  # Tests de cabeceras y protección OWASP
+│   ├── app.py                # Punto de entrada y configuración de Flask
+│   ├── auth.py               # Blueprint de Autenticación y Lógica de Sesión
+│   ├── forms.py              # Definición de formularios seguros (Flask-WTF)
+│   ├── models.py             # Esquema de DB (SQLAlchemy)
+│   ├── tasks.py              # Blueprint de gestión de activos (Tareas)
+│   ├── tailwind.config.js    # Configuración de diseño y paleta de colores
+│   ├── requirements.txt      # Dependencias del stack de seguridad
+│   └── Dockerfile            # Definición de contenedor para la aplicación
 ├── nginx/
-│   ├── default.conf    # Configuración de Proxy Inverso y SSL
-│   ├── selfsigned.crt  # Certificado SSL generado
-│   └── selfsigned.key  # Llave privada SSL
-│
-├── docker-compose.yml # Orquestación de contenedores
-├── .env # Variables de entorno (no versionado)
-└── README.md
+│   ├── default.conf          # Configuración de Hardening de Proxy Inverso
+│   ├── selfsigned.crt        # Certificado SSL (Transport Layer Security)
+│   └── selfsigned.key        # Llave privada del certificado
+├── .env                      # Variables de entorno críticas (Secret Keys, DB URLs)
+├── .gitignore                # Exclusión de activos sensibles del versionado
+├── docker-compose.yml        # Orquestación de servicios (App + Nginx)
+└── README.md                 # Documentación técnica del sistema
 ```
 
 ---
