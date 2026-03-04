@@ -8,7 +8,6 @@ El objetivo es construir una aplicación funcional, dockerizada y securizada, ap
 - control de accesos
 - pruebas de seguridad básicas
 
----
 
 ## 🎯 Descripción del proyecto
 
@@ -23,7 +22,6 @@ La aplicación consiste en un **gestor de tareas (ToDo)** con las siguientes car
 
 Cada usuario solo puede acceder y gestionar **sus propias tareas**, mientras que el usuario administrador puede gestionar las tareas de todos los usuarios.
 
----
 
 ## 🏗️ Arquitectura y Tecnologías
 
@@ -36,7 +34,6 @@ La aplicación utiliza un stack moderno y seguro:
 * **ORM:** SQLAlchemy (parametrización nativa contra SQL Injection).
 * **Orquestación:** **Docker Compose** con redes internas segmentadas.
 
----
 
 ## 🔐 Funcionalidades Implementadas
 
@@ -53,7 +50,7 @@ La aplicación utiliza un stack moderno y seguro:
 ### ✅ Infraestructura DevSecOps
 * **Aislamiento de Puertos:** El contenedor de Flask ha sido retirado del mapeo público (puerto 5000 cerrado), exponiéndose únicamente de forma interna hacia Nginx.
 * **Proxy Inverso Seguro:** Nginx actúa como única puerta de enlace, ocultando la topología interna y la tecnología del backend.
----
+
 
 ## 🔒 Capas de Seguridad Aplicadas
 
@@ -61,8 +58,6 @@ La aplicación utiliza un stack moderno y seguro:
 * **Seguridad en Sesiones:** Firma de cookies mediante `SECRET_KEY` gestionada por entorno.
 * **Principio de Menor Privilegio:** Roles diferenciados para limitar el radio de acción de los usuarios en caso de compromiso.
 * **Validación de Entradas:** Filtrado de datos en servidor antes de procesar cambios en la DB.
-
----
 
 ## ▶️ Cómo ejecutar el proyecto
 
@@ -133,7 +128,6 @@ secure-todo-app/
 └── README.md                 # Documentación técnica del sistema
 ```
 
----
 
 ## 🔐 Enfoque de seguridad
 
@@ -146,7 +140,6 @@ El proyecto está diseñado teniendo en cuenta principios básicos de seguridad:
 - Protección frente a accesos no autorizados
 - Pruebas unitarias enfocadas a autenticación y permisos
 
----
 
 ## 🛡️ Security Testing & Evidence
 
@@ -163,7 +156,6 @@ Intentos de realizar peticiones `POST` (como creación de tareas) desde herramie
 ### 3. Aislamiento de Red
 Se ha comprobado mediante escaneo de puertos que el puerto **5000 (Flask)** y el **3306 (MySQL)** son inaccesibles desde el exterior de la red Docker, reduciendo la superficie de ataque solo al puerto **443 (Nginx)**.
 
----
 
 ## 🧪 Pruebas
 
@@ -172,8 +164,6 @@ Se incluirán pruebas unitarias con **pytest**, enfocadas principalmente en:
 - Login correcto e incorrecto
 - Acceso no autorizado a rutas protegidas
 - Control de permisos entre usuarios y administrador
-
----
 
 ## 🧪 Estado actual del proyecto
 
@@ -186,7 +176,41 @@ Se incluirán pruebas unitarias con **pytest**, enfocadas principalmente en:
 - Estilos con TailwindCSS
 - Cifrado de extremo a extremo (HTTPS)
 
+## 🛡️ Cumplimiento de Seguridad (OWASP Top 10:2025)
+
+Este ecosistema ha sido diseñado y auditado bajo los estándares de **OWASP**, implementando controles técnicos específicos para mitigar las amenazas más críticas identificadas en el panorama de ciberseguridad actual (2025-2026).
+
+| Categoría | Implementación Técnica en Secure ToDo | Archivos Relacionados |
+| :--- | :--- | :--- |
+| **A01:2025-Broken Access Control** | Control de acceso basado en roles (**RBAC**) y aislamiento de objetos. Se verifica que un usuario solo pueda operar sobre su propio `user_id`. | `app/tasks.py`, `app/models.py` |
+| **A02:2025-Cryptographic Failures** | Implementación de **BCrypt** para el salting/hashing de credenciales. Tráfico cifrado mediante **TLS 1.3** configurado en el proxy inverso. | `app/auth.py`, `nginx/default.conf` |
+| **A03:2025-Injection** | Uso de **SQLAlchemy ORM** para consultas parametrizadas. Sanitización estricta de entradas para evitar SQLi y XSS persistente. | `app/forms.py`, `app/models.py` |
+| **A04:2025-Insecure Design** | Arquitectura de "Privilegio Mínimo". Los flujos de autenticación y recuperación siguen patrones de diseño seguro desde la base. | `app/app.py` |
+| **A05:2025-Security Misconfiguration** | Hardening de cabeceras de seguridad (**HSTS, X-Frame-Options, CSP**). Despliegue en contenedores Docker con usuarios no-root. | `nginx/default.conf`, `Dockerfile` |
+| **A06:2025-Vulnerable and Outdated Components** | Gestión centralizada de dependencias y escaneo de vulnerabilidades en la cadena de suministro mediante el pipeline de CI/CD. | `requirements.txt`, `pipeline.yml` |
+| **A07:2025-Identification and Authentication Failures** | Protección contra fuerza bruta mediante **Rate Limiting**. Cookies de sesión con flags `HttpOnly`, `Secure` y `SameSite`. | `app/app.py`, `app/auth.py` |
+| **A08:2025-Software and Data Integrity Failures** | Validación de integridad en el despliegue. Protección contra ataques de des-serialización y uso de tokens **CSRF** en formularios. | `app/forms.py`, `pipeline.yml` |
+| **A09:2025-Security Logging and Monitoring Failures** | Registro estructurado de eventos de autenticación y errores críticos para facilitar la auditoría y respuesta ante incidentes. | `app/app.py` |
+| **A10:2025-Server-Side Request Forgery (SSRF)** | Restricción de red a nivel de Docker-Compose y validación de peticiones salientes para proteger la infraestructura interna. | `docker-compose.yml` |
+
 ---
+
+## 🛡️ Estándar de Verificación de Seguridad (OWASP ASVS 5.0)
+
+Este proyecto ha sido desarrollado bajo los controles del **ASVS 5.0 (Nivel 1 y 2)**, garantizando una defensa en profundidad mediante la verificación técnica de los siguientes dominios:
+
+| Categoría | Requisitos Verificados (L1/L2) | Implementación en Secure ToDo |
+| :--- | :--- | :--- |
+| **V1: Arquitectura** | Seguridad por diseño y modelado de amenazas. | Arquitectura segregada (Proxy + App + DB) mediante Docker. |
+| **V2: Autenticación** | Gestión de contraseñas y antifuerza bruta. | Hashing BCrypt, políticas de longitud mínima y Flask-Limiter. |
+| **V3: Gestión de Sesión** | Atributos de cookies y tiempos de expiración. | Cookies con flags `Secure`, `HttpOnly` y `SameSite=Lax`. |
+| **V4: Control de Acceso** | Principio de privilegio mínimo y denegación por defecto. | Verificación de propiedad de recursos en cada endpoint (`user_id`). |
+| **V5: Validación e Inyección** | Sanitización de entradas y parametrización de queries. | Uso estricto de **Flask-WTF** y **SQLAlchemy ORM**. |
+| **V6: Criptografía Estática** | Almacenamiento seguro de secretos y hashes. | Protección de claves privadas en `.env` (no versionado). |
+| **V7: Registro y Errores** | Prevención de fuga de info en errores y logs de auditoría. | Páginas de error personalizadas y logs de eventos críticos. |
+| **V8: Protección de Datos** | Protección de datos sensibles en tránsito y memoria. | Eliminación de buffers innecesarios y uso de TLS 1.3. |
+| **V9: Comunicaciones** | Configuración segura de TLS y cabeceras HTTP. | Hardening en Nginx (HSTS, CSP, X-Content-Type-Options). |
+| **V14: Configuración** | Endurecimiento de la plataforma y dependencias. | Ejecución en Docker con usuario no-root y escaneo de SBOM. |
 
 ## 👤 Autor
 
