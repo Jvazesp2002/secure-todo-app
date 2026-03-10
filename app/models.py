@@ -42,6 +42,7 @@ SessionLocal = sessionmaker(bind=engine)
 
 Base = declarative_base()
 
+# Modelos de datos para usuarios y tareas
 class User(UserMixin, Base):
     __tablename__ = "users"
 

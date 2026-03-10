@@ -1,3 +1,4 @@
+# Prueba para verificar que la página de registro es accesible sin autenticación
 def test_register_page_accessible(client):
     """Verifica que la página de registro carga correctamente sin estar logueado."""
     response = client.get('/register')

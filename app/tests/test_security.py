@@ -1,6 +1,7 @@
 import pytest
 from models import User, Task
 
+# Prueba para verificar que un usuario no puede acceder a las tareas de otro usuario
 def test_user_cannot_see_others_tasks(client, db_session):
     # 1. Creamos dos usuarios distintos
     user_a = User(id=10, username="user_a", password_hash="hash1")
