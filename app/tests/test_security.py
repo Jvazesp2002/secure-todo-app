@@ -19,8 +19,7 @@ def test_user_cannot_see_others_tasks(client, db_session):
         sess['user_id'] = user_a.id
         sess['_fresh'] = True
 
-    # 4. INTENTO DE ACCESO: El Usuario A intenta ver la tarea del Usuario B
-    # Ajusta esta URL según tu ruta (ej. /tasks/50 o /tasks/view/50)
+    # 4. Usuario A intenta acceder a la tarea de Usuario B
     response = client.get(f'/tasks/{task_b.id}', follow_redirects=True)
 
     # 5. VERIFICACIÓN DE SEGURIDAD
