@@ -59,7 +59,7 @@ La aplicación utiliza un stack moderno y seguro:
 * **Principio de Menor Privilegio:** Roles diferenciados para limitar el radio de acción de los usuarios en caso de compromiso.
 * **Validación de Entradas:** Filtrado de datos en servidor antes de procesar cambios en la DB.
 
-## ▶ Cómo ejecutar el proyecto
+##  Cómo ejecutar el proyecto
 
 1. Clonar el repositorio
 2. Crear archivo `.env` con las variables necesarias
