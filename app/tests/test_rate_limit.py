@@ -1,5 +1,5 @@
 import pytest
-
+# Prueba para verificar que el sistema de rate limiting de Nginx bloquea correctamente después de varios intentos
 def test_nginx_rate_limiting(client):
     success_count = 0
     blocked_count = 0

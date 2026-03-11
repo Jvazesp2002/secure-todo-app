@@ -7,6 +7,7 @@ from forms import RegistrationForm, LoginForm
 
 auth_bp = Blueprint("auth", __name__)
 
+# Rutas para autenticación (registro, login, logout)
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register():
     form = RegistrationForm()
