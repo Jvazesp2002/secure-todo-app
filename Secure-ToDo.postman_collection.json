@@ -1,0 +1,285 @@
+{
+  "info": {
+    "_postman_id": "88ceb8a6-f2ab-40d8-819e-8a42fe5f8175",
+    "name": "Secure-ToDo",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52347045",
+    "_collection_link": "https://go.postman.co/collection/52347045-88ceb8a6-f2ab-40d8-819e-8a42fe5f8175?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Obtener Token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const responseBody = pm.response.text();\r",
+              "// Buscamos el valor dentro del atributo value del input con name=\"csrf_token\"\r",
+              "const match = responseBody.match(/name=\"csrf_token\".*value=\"([^\"]+)\"/);\r",
+              "\r",
+              "if (match) {\r",
+              "    // Guardamos el token en la variable de la COLECCIÓN\r",
+              "    pm.collectionVariables.set(\"csrf_token\", match[1]);\r",
+              "    console.log(\"✅ Token guardado: \" + match[1]);\r",
+              "} else {\r",
+              "    console.log(\"❌ No se encontró el token en el HTML\");\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost/login",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Referer",
+            "value": "https://localhost/login",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "user1",
+              "type": "text",
+              "uuid": "beff2014-fc10-47cc-bce7-fbb768dcb6c4"
+            },
+            {
+              "key": "password",
+              "value": "12345678",
+              "type": "text",
+              "uuid": "950505a0-91ce-4d7b-bb91-ec5093c16b43"
+            },
+            {
+              "key": "csrf_token",
+              "value": "{{csrf_token}}",
+              "type": "text",
+              "uuid": "9475c180-4ce2-46f7-b702-32c6502be1ed"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://localhost/login",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login Admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Referer",
+            "value": "https://localhost/login",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "admin",
+              "type": "text",
+              "uuid": "beff2014-fc10-47cc-bce7-fbb768dcb6c4"
+            },
+            {
+              "key": "password",
+              "value": "administrador",
+              "type": "text",
+              "uuid": "950505a0-91ce-4d7b-bb91-ec5093c16b43"
+            },
+            {
+              "key": "csrf_token",
+              "value": "{{csrf_token}}",
+              "type": "text",
+              "uuid": "9475c180-4ce2-46f7-b702-32c6502be1ed"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://localhost/login",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar Tareas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost/tasks",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "tasks"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear Tarea",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Referer",
+            "value": "https://localhost/tasks/create",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "title",
+              "value": "Tarea desde Postman",
+              "type": "text",
+              "uuid": "58c247e3-5fb2-482e-bf99-5fdf5b43d6e7"
+            },
+            {
+              "key": "description",
+              "value": "Esta es una tarea desde Postman",
+              "type": "text",
+              "uuid": "817b6b69-84d7-415c-8245-71035b15c21a"
+            },
+            {
+              "key": "csrf_token",
+              "value": "{{csrf_token}}",
+              "type": "text",
+              "uuid": "fdbbf2ab-4df9-498d-91d0-afbd135f055a"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://localhost/tasks/create",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "tasks",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminar Tarea",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Referer",
+            "value": "https://localhost/tasks/delete/1",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "csrf_token",
+              "value": "{{csrf_token}}",
+              "type": "text",
+              "uuid": "03cc3060-d005-4d37-a18d-4cbc424c7c11"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://localhost/tasks/6/delete",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "tasks",
+            "6",
+            "delete"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "const responseBody = pm.response.text();\r",
+          "const match = responseBody.match(/name=\"csrf_token\" value=\"([^\"]+)\"/);\r",
+          "if (match) {\r",
+          "    pm.collectionVariables.set(\"csrf_token\", match[1]);\r",
+          "    console.log(\"Token extraído: \" + match[1]);\r",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "csrf_token",
+      "value": ""
+    }
+  ]
+}
