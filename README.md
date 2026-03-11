@@ -1,4 +1,4 @@
-# Secure Todo App 🛡️📝
+# Secure Todo App 
 
 Aplicación web desarrollada como proyecto académico para un **Máster en Ciberseguridad**, enfocada en **Puesta en Producción Segura**.
 
@@ -9,7 +9,7 @@ El objetivo es construir una aplicación funcional, dockerizada y securizada, ap
 - pruebas de seguridad básicas
 
 
-## 🎯 Descripción del proyecto
+##  Descripción del proyecto
 
 La aplicación consiste en un **gestor de tareas (ToDo)** con las siguientes características:
 
@@ -23,7 +23,7 @@ La aplicación consiste en un **gestor de tareas (ToDo)** con las siguientes car
 Cada usuario solo puede acceder y gestionar **sus propias tareas**, mientras que el usuario administrador puede gestionar las tareas de todos los usuarios.
 
 
-## 🏗️ Arquitectura y Tecnologías
+##  Arquitectura y Tecnologías
 
 La aplicación utiliza un stack moderno y seguro:
 
@@ -35,31 +35,31 @@ La aplicación utiliza un stack moderno y seguro:
 * **Orquestación:** **Docker Compose** con redes internas segmentadas.
 
 
-## 🔐 Funcionalidades Implementadas
+##  Funcionalidades Implementadas
 
-### ✅ Cifrado de Extremo a Extremo (HTTPS)
+###  Cifrado de Extremo a Extremo (HTTPS)
 * **Certificados SSL:** Uso de certificados (auto-firmados para desarrollo) que garantizan la privacidad del tráfico.
 * **Redirección Forzosa:** El puerto 80 (HTTP) redirige automáticamente al 443 (HTTPS) mediante código de estado 301.
 * **Protocolos Seguros:** Configuración de Nginx limitada a **TLS 1.2 y 1.3** para evitar ataques de degradación de protocolo.
 
-### ✅ Protección contra Ataques Web
+###  Protección contra Ataques Web
 * **Defensa CSRF:** Protección global mediante tokens contra *Cross-Site Request Forgery* en todos los formularios.
 * **Validación de Referer:** Control estricto de cabeceras en peticiones HTTPS para asegurar el origen legítimo del tráfico.
 * **Hardening de Cookies:** Uso de flags `Secure`, `HttpOnly` y `SameSite=Lax` para mitigar el secuestro de sesiones (Session Hijacking).
 
-### ✅ Infraestructura DevSecOps
+###  Infraestructura DevSecOps
 * **Aislamiento de Puertos:** El contenedor de Flask ha sido retirado del mapeo público (puerto 5000 cerrado), exponiéndose únicamente de forma interna hacia Nginx.
 * **Proxy Inverso Seguro:** Nginx actúa como única puerta de enlace, ocultando la topología interna y la tecnología del backend.
 
 
-## 🔒 Capas de Seguridad Aplicadas
+##  Capas de Seguridad Aplicadas
 
 * **Protección de Credenciales:** Hashing de contraseñas mediante `PBKDF2` con salt (vía `werkzeug.security`).
 * **Seguridad en Sesiones:** Firma de cookies mediante `SECRET_KEY` gestionada por entorno.
 * **Principio de Menor Privilegio:** Roles diferenciados para limitar el radio de acción de los usuarios en caso de compromiso.
 * **Validación de Entradas:** Filtrado de datos en servidor antes de procesar cambios en la DB.
 
-## ▶️ Cómo ejecutar el proyecto
+## ▶ Cómo ejecutar el proyecto
 
 1. Clonar el repositorio
 2. Crear archivo `.env` con las variables necesarias
@@ -89,7 +89,7 @@ docker compose up --build
 * https://localhost
 ---
 
-## 📂 Estructura del proyecto
+##  Estructura del proyecto
 ```
 secure-todo-app/
 ├── .github/workflows/
@@ -129,7 +129,7 @@ secure-todo-app/
 ```
 
 
-## 🔐 Enfoque de seguridad
+##  Enfoque de seguridad
 
 El proyecto está diseñado teniendo en cuenta principios básicos de seguridad:
 
@@ -141,7 +141,7 @@ El proyecto está diseñado teniendo en cuenta principios básicos de seguridad:
 - Pruebas unitarias enfocadas a autenticación y permisos
 
 
-## 🛡️ Security Testing & Evidence
+##  Security Testing & Evidence
 
 Para validar la seguridad de la aplicación, se han realizado las siguientes pruebas:
 
@@ -157,7 +157,7 @@ Intentos de realizar peticiones `POST` (como creación de tareas) desde herramie
 Se ha comprobado mediante escaneo de puertos que el puerto **5000 (Flask)** y el **3306 (MySQL)** son inaccesibles desde el exterior de la red Docker, reduciendo la superficie de ataque solo al puerto **443 (Nginx)**.
 
 
-## 🧪 Pruebas
+##  Pruebas
 
 Se incluirán pruebas unitarias con **pytest**, enfocadas principalmente en:
 
@@ -165,18 +165,7 @@ Se incluirán pruebas unitarias con **pytest**, enfocadas principalmente en:
 - Acceso no autorizado a rutas protegidas
 - Control de permisos entre usuarios y administrador
 
-## 🧪 Estado actual del proyecto
-
-### 🟢 FASE COMPLETADA
-- Infraestructura Docker
-- Conexión Flask ↔ MySQL
-- Autenticación segura y persistente
-- Gestión de sesiones
-- CRUD de tareas con lógica de permisos(RBAC)
-- Estilos con TailwindCSS
-- Cifrado de extremo a extremo (HTTPS)
-
-## 🛡️ Cumplimiento de Seguridad (OWASP Top 10:2025)
+##  Cumplimiento de Seguridad (OWASP Top 10:2025)
 
 Este ecosistema ha sido diseñado y auditado bajo los estándares de **OWASP**, implementando controles técnicos específicos para mitigar las amenazas más críticas identificadas en el panorama de ciberseguridad actual (2025-2026).
 
@@ -195,7 +184,7 @@ Este ecosistema ha sido diseñado y auditado bajo los estándares de **OWASP**, 
 
 ---
 
-## 🛡️ Estándar de Verificación de Seguridad (OWASP ASVS 5.0)
+##  Estándar de Verificación de Seguridad (OWASP ASVS 5.0)
 
 Este proyecto ha sido desarrollado bajo los controles del **ASVS 5.0 (Nivel 1 y 2)**, garantizando una defensa en profundidad mediante la verificación técnica de los siguientes dominios:
 
@@ -212,6 +201,6 @@ Este proyecto ha sido desarrollado bajo los controles del **ASVS 5.0 (Nivel 1 y 
 | **V9: Comunicaciones** | Configuración segura de TLS y cabeceras HTTP. | Hardening en Nginx (HSTS, CSP, X-Content-Type-Options). |
 | **V14: Configuración** | Endurecimiento de la plataforma y dependencias. | Ejecución en Docker con usuario no-root y escaneo de SBOM. |
 
-## 👤 Autor
+##  Autor
 
 Proyecto desarrollado por Jorge Vázquez Espinosa, estudiante de ciberseguridad.
